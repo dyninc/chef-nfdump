@@ -1,0 +1,49 @@
+---
+driver:
+   name: vagrant
+
+provisioner:
+  name: chef_solo
+  require_chef_omnibus: 11.16.4
+  data_path: test/fixtures
+
+platforms:
+- name: centos-6.5
+  run_list:
+  - recipe[yum]
+- name: centos-7.0
+  run_list:
+  - recipe[yum]
+- name: ubuntu-12.04
+  run_list:
+  - recipe[apt]
+- name: ubuntu-14.04
+  run_list:
+  - recipe[apt]
+- name: debian-7.6
+  run_list:
+  - recipe[apt]
+- name: fedora-20
+  run_list:
+  - recipe[yum]
+- name: scientific-6.4
+  driver:
+    box: lyte-scientific-6-minimal
+    box_url: http://lyte.id.au/vagrant/sl6-64-lyte.box
+- name: opensuse-11.1
+  driver:
+    box: opensuse-11.1
+    box_url: https://s3.amazonaws.com/minesense/vagrant/opensuse-11.1-i586.box
+  run_list:
+  - recipe[zypper]
+- name: opensuse-13.1
+  driver:
+    box: opscode-opensuse-13.1
+    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_opensuse-13.1-x86_64_chef-provisionerless.box
+  run_list:
+  - recipe[zypper]
+
+suites:
+- name: default
+  run_list:
+  - recipe[nfdump::nfcapd]
