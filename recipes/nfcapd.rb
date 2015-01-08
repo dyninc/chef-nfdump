@@ -21,13 +21,23 @@ include_recipe 'nfdump::default'
 include_recipe 'runit::default'
 include_recipe 'chef-sugar'
 
-service 'nfcapd' do
+service 'nfdump' do
   action [:stop, :disable]
   only_if { ubuntu? }
 end
 
-directory node['nfdump']['nfcapd']['datadir']
+directory node['nfdump']['nfcapd']['datadir'] do
+  action :create
+end
 
-runit_service 'nfcapd' do
-  default_logger true
+data_bag('nfcapd').each do |id|
+  item = data_bag_item('nfcapd', id)
+
+  directory item['datadir'] if item.key? 'datadir'
+
+  nfdump_nfcapd item['id'] do
+    port item['port']
+    datadir item['datadir'] || node['nfdump']['nfcapd']['datadir']
+    action :enable
+  end
 end

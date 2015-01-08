@@ -3,7 +3,7 @@ driver:
    name: vagrant
 
 provisioner:
-  name: chef_solo
+  name: chef_zero
   require_chef_omnibus: 11.16.4
   data_path: test/fixtures
 
@@ -45,5 +45,6 @@ platforms:
 
 suites:
 - name: default
+  data_bags_path: "test/integration/data_bags"
   run_list:
   - recipe[nfdump::nfcapd]

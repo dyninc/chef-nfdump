@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+exec /usr/bin/nfcapd -l <%= @options[:datadir] %> \
+  -P <%= File.join(node['nfdump']['nfcapd']['piddir'], "nfcapd-#{@options[:name]}.pid") %> \
+  -p <%= @options[:port] %> \
+  2>&1

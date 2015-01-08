@@ -1,0 +1,5 @@
+{
+  "id": "router1",
+  "port": 9995,
+  "datadir": "/flows"
+}

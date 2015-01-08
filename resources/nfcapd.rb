@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: nfdump
-# Attributes:: default
+# Provider:: nfcapd
 #
 # Copyright 2015, Dyn Inc
 #
@@ -17,5 +17,10 @@
 # limitations under the License.
 #
 
-default['nfdump']['nfcapd']['datadir'] = '/var/cache/nfdump'
-default['nfdump']['nfcapd']['piddir'] = '/var/run/'
+actions :enable, :disable, :start, :stop, :restart
+
+default_action :enable
+
+attribute :name, :kind_of => String, :name_attribute => true
+attribute :port, :kind_of => Integer, :default => 9995
+attribute :datadir, :kind_of => String, :default => node['nfdump']['nfcapd']['datadir']
